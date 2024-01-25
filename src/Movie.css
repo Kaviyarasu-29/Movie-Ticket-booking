@@ -87,3 +87,6 @@
     margin-bottom: 25px;
     margin-top: 15px;
 }
+.Logout-btn, .Book-btn{
+    margin: 10px !important;
+}

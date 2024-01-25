@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = () => {
         if (!username || !password) {
@@ -15,8 +17,9 @@ const Login = ({ onLogin }) => {
             setErrorMessage('Password must contain at least 8 characters including one uppercase letter, one lowercase letter, one number, and one special character.');
             return;
         }
-        onLogin();
+        navigate('/movie');
     };
+
     return (
         <div className='Container-main lng-main'>
             <div className='Cntner'>
@@ -35,4 +38,5 @@ const Login = ({ onLogin }) => {
         </div>
     );
 };
+
 export default Login;
