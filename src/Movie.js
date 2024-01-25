@@ -2,73 +2,73 @@ import React, { useState } from 'react';
 import './Movie.css';
 
 const Movie = () => {
-    const [sctAvng, setSctAvng] = useState([]);
-    const [bsAvng, setBsAvng] = useState([]);
-    const [scAvng, setScAvng] = useState(0);
-    const [amtAvng, setAmtAvng] = useState(0);
+    const [selectedSeatsAvengers, setSelectedSeatsAvengers] = useState([]);
+    const [bookedSeatsAvengers, setBookedSeatsAvengers] = useState([]);
+    const [seatCountAvengers, setSeatCountAvengers] = useState(0);
+    const [amountAvengers, setAmountAvengers] = useState(0);
 
-    const [sctIron, setSctIron] = useState([]);
-    const [bsIron, setBsIron] = useState([]);
-    const [scIron, setScIron] = useState(0);
-    const [amtIron, setAmtIron] = useState(0);
+    const [selectedSeatsIronMan, setSelectedSeatsIronMan] = useState([]);
+    const [bookedSeatsIronMan, setBookedSeatsIronMan] = useState([]);
+    const [seatCountIronMan, setSeatCountIronMan] = useState(0);
+    const [amountIronMan, setAmountIronMan] = useState(0);
 
-    const [slctdMv, setSlctdMv] = useState('Avengers');
-    const hdlg = () => {
+    const [selectedMovie, setSelectedMovie] = useState('Avengers');
+    const handleBooking = () => {
     };
-    const scClick = (row, col) => {
+    const seatClick = (row, col) => {
         const seat = `${row}-${col}`;
-        const isAvng = slctdMv === 'Avengers';
-        const isIron = slctdMv === 'IronMan';
-        let updtSeats;
-        let setSct;
-        let setSc;
-        let setAmt;
-        if (isAvng) {
-            updtSeats = [...sctAvng];
-            setSct = setSctAvng;
-            setSc = setScAvng;
-            setAmt = setAmtAvng;
-        } else if (isIron) {
-            updtSeats = [...sctIron];
-            setSct = setSctIron;
-            setSc = setScIron;
-            setAmt = setAmtIron;
+        const isAvengers = selectedMovie === 'Avengers';
+        const isIronMan = selectedMovie === 'IronMan';
+        let updatedSeats;
+        let setSelectedSeats;
+        let setSeatCount;
+        let setAmount;
+        if (isAvengers) {
+            updatedSeats = [...selectedSeatsAvengers];
+            setSelectedSeats = setSelectedSeatsAvengers;
+            setSeatCount = setSeatCountAvengers;
+            setAmount = setAmountAvengers;
+        } else if (isIronMan) {
+            updatedSeats = [...selectedSeatsIronMan];
+            setSelectedSeats = setSelectedSeatsIronMan;
+            setSeatCount = setSeatCountIronMan;
+            setAmount = setAmountIronMan;
         }
 
-        const isSelected = updtSeats.includes(seat);
-        const isBooked = isAvng ? bsAvng.includes(seat) : bsIron.includes(seat);
+        const isSelected = updatedSeats.includes(seat);
+        const isBooked = isAvengers ? bookedSeatsAvengers.includes(seat) : bookedSeatsIronMan.includes(seat);
 
         if (isBooked) return;
 
         if (isSelected) {
-            updtSeats = updtSeats.filter((s) => s !== seat);
+            updatedSeats = updatedSeats.filter((s) => s !== seat);
         } else {
-            updtSeats.push(seat);
+            updatedSeats.push(seat);
         }
 
-        setSct(updtSeats);
-        setSc(updtSeats.length);
-        setAmt(updtSeats.length * 100);
+        setSelectedSeats(updatedSeats);
+        setSeatCount(updatedSeats.length);
+        setAmount(updatedSeats.length * 100);
     };
 
-    const hdlBookButtonClick = () => {
-        const isAvng = slctdMv === 'Avengers';
-        const isIron = slctdMv === 'IronMan';
-        if (isAvng) {
-            setBsAvng((prevBookedSeats) => [...prevBookedSeats, ...sctAvng]);
-            setSctAvng([]);
-            setScAvng(0);
-            setAmtAvng(0);
-        } else if (isIron) {
-            setBsIron((prevBookedSeats) => [...prevBookedSeats, ...sctIron]);
-            setSctIron([]);
-            setScIron(0);
-            setAmtIron(0);
+    const handleBookButtonClick = () => {
+        const isAvengers = selectedMovie === 'Avengers';
+        const isIronMan = selectedMovie === 'IronMan';
+        if (isAvengers) {
+            setBookedSeatsAvengers((prevBookedSeats) => [...prevBookedSeats, ...selectedSeatsAvengers]);
+            setSelectedSeatsAvengers([]);
+            setSeatCountAvengers(0);
+            setAmountAvengers(0);
+        } else if (isIronMan) {
+            setBookedSeatsIronMan((prevBookedSeats) => [...prevBookedSeats, ...selectedSeatsIronMan]);
+            setSelectedSeatsIronMan([]);
+            setSeatCountIronMan(0);
+            setAmountIronMan(0);
         }
     };
 
-    const MovieCng = (e) => {
-        setSlctdMv(e.target.value);
+    const movieChange = (e) => {
+        setSelectedMovie(e.target.value);
     };
 
     return (
@@ -77,7 +77,7 @@ const Movie = () => {
             <h1>Movie Seat Booking</h1>
             <div className='Mv-lb'>
                 <label>Select Movie:</label>
-                <select value={slctdMv} onChange={MovieCng}>
+                <select value={selectedMovie} onChange={movieChange}>
                     <option value="Avengers">Avengers</option>
                     <option value="IronMan">IronMan</option>
                 </select>
@@ -97,13 +97,13 @@ const Movie = () => {
                     <div key={row}>
                         {[...Array(5)].map((_, col) => {
                             const seat = `${row}-${col}`;
-                            const isSelected = slctdMv === 'Avengers' ? sctAvng.includes(seat) : sctIron.includes(seat);
-                            const isBooked = slctdMv === 'Avengers' ? bsAvng.includes(seat) : bsIron.includes(seat);
+                            const isSelected = selectedMovie === 'Avengers' ? selectedSeatsAvengers.includes(seat) : selectedSeatsIronMan.includes(seat);
+                            const isBooked = selectedMovie === 'Avengers' ? bookedSeatsAvengers.includes(seat) : bookedSeatsIronMan.includes(seat);
 
                             return (
                                 <button
                                     key={col}
-                                    onClick={() => scClick(row, col)}
+                                    onClick={() => seatClick(row, col)}
                                     className={`seat ${isBooked ? 'booked' : isSelected ? 'selected' : ''}`}
                                     disabled={isBooked}
                                 ></button>
@@ -114,11 +114,11 @@ const Movie = () => {
             </div>
             
             <div>
-                <p>Selected Seats: {slctdMv === 'Avengers' ? scAvng : scIron}</p>
-                <p>Total Amount: ${slctdMv === 'Avengers' ? amtAvng : amtIron}</p>
+                <p>Selected Seats: {selectedMovie === 'Avengers' ? seatCountAvengers : seatCountIronMan}</p>
+                <p>Total Amount: ${selectedMovie === 'Avengers' ? amountAvengers : amountIronMan}</p>
             </div>
 
-            <button onClick={hdlBookButtonClick}>Book</button>
+            <button onClick={handleBookButtonClick}>Book</button>
             </div>
         </div>
     );

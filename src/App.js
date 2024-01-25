@@ -5,13 +5,13 @@ import Movie from './Movie';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const hdlgn = () => {
+  const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
   return (
     <div className='bc'>
-      {!isLoggedIn && <Login onLogin={hdlgn} />}
+      {!isLoggedIn && <Login onLogin={handleLogin} />}
       {isLoggedIn && <Movie />}
     </div>
   );

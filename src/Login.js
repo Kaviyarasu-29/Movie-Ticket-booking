@@ -5,7 +5,7 @@ const Login = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const hdlg = () => {
+    const handleLogin = () => {
         if (!username || !password) {
             setErrorMessage('Username and password are required.');
             return;
@@ -30,7 +30,7 @@ const Login = ({ onLogin }) => {
                     <input type="password" placeholder='Enter Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-                <button className='btn-lng' onClick={hdlg}>Login</button>
+                <button className='btn-lng' onClick={handleLogin}>Login</button>
             </div>
         </div>
     );
